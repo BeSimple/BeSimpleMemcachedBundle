@@ -1,0 +1,29 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+
+{% block menu %}
+<span class="label">
+    <span class="icon"><img src="{{ asset('bundles/webprofiler/images/profiler/events.png') }}" alt="Memcache" /></span>
+    <strong>Memcached</strong>
+    <span class="count">
+        <span>{{ collector.actions|length }}</span>
+        <span>{{ '%0.0f'|format(collector.time * 1000) }} ms</span>
+    </span>
+</span>
+{% endblock %}
+
+{% block panel %}
+<h2>Actions</h2>
+<ul class="alt">
+    {% for action in collector.actions %}
+        <li class="{{ cycle(['odd', 'even'], loop.index) }}">
+            <div>{{ action.name }}</div>
+            <small>
+                <strong>Parameters</strong>: {{ action.params|yaml_encode }}<br />
+                <strong>Returned value</strong>: {{ action.returned_value }}<br />
+                <strong>Result message</strong>: {{ action.result_message }}<br />
+                <strong>Time</strong>: {{ '%0.2f'|format(action.time * 1000) }} ms
+            </small>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

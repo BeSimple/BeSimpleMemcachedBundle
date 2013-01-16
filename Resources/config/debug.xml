@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="be_simple.memcached.debug.traceable.class">BeSimple_Memcached_Debug_Traceable</parameter>
+        <parameter key="be_simple.memcached.data_collector.memcached.class">BeSimple\Bundle\MemcachedBundle\DataCollector\MemcachedDataCollector</parameter>
+    </parameters>
+
+    <services>
+        <service id="be_simple.memcached.debug.traceable" class="%be_simple.memcached.debug.traceable.class%" public="false">
+            <argument /> <!-- the memcached service -->
+        </service>
+
+        <service id="be_simple.memcached.data_collector.memcached" class="%be_simple.memcached.data_collector.memcached.class%" public="false">
+            <tag name="data_collector" template="BeSimpleMemcachedBundle:Collector:memcached" id="be_simple.memcached" priority="255" />
+            <call method="setMemcached">
+                <argument type="service" id="be_simple.memcached" />
+            </call>
+        </service>
+    </services>
+</container>
